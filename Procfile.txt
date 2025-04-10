@@ -1,1 +1,1 @@
-web: python etl.py
+web: streamlit run app.py
