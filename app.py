@@ -1,9 +1,12 @@
 import streamlit as st
-from etl import run_etl  # Make sure `etl.py` has a `run_etl()` function
+from etl import run_etl
 
-st.title("ETL Dashboard")
+st.title("🧠 Market News ETL")
 
-if st.button("Run ETL Now"):
-    st.write("Running ETL...")
-    result = run_etl()
-    st.success("ETL Complete!")
+symbol = st.text_input("Enter stock symbol (e.g., AAPL):", "AAPL")
+
+if st.button("Run ETL"):
+    with st.spinner("Running ETL pipeline..."):
+        output = run_etl(symbol)
+        st.success("ETL complete!")
+        st.markdown(f"### Insight for **{symbol}**:\n\n{output}")
