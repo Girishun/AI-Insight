@@ -1,10 +1,11 @@
+# etl.py
+
 import requests
 from datetime import datetime, timedelta
 import google.generativeai as genai
 from config import FINNHUB_API_KEY, GOOGLE_API_KEY
 from database import get_connection, create_tables
 
-# Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
 def fetch_news(symbol):
@@ -47,11 +48,14 @@ def save_insight(text, symbol):
     cur.close()
     conn.close()
 
-if __name__ == "__main__":
+def run_etl(symbol="AAPL"):
     create_tables()
-    symbol = "AAPL"
     news = fetch_news(symbol)
     save_news(news, symbol)
     insight = summarize(news, symbol)
     save_insight(insight, symbol)
-    print("\n🧠 Market Insight:\n", insight)
+    print(f"\n🧠 Market Insight for {symbol}:\n", insight)
+    return insight
+
+if __name__ == "__main__":
+    run_etl()
