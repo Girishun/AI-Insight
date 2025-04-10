@@ -1,0 +1,5 @@
+feedparser
+psycopg2-binary
+google-generativeai
+requests
+python-dotenv
